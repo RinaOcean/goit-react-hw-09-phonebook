@@ -1,0 +1,30 @@
+.ContactsListItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 2px;
+    outline-style: none;
+    border-radius: 50%;
+    // border: 2px solid #852459;
+    border-style: none;
+    background-color: transparent;
+    font-weight: 400;
+    font-size: 18px;
+    color: #852459;
+
+    transition: 1s all ease;
+  }
+
+  button:hover,
+  button:focus {
+    background-color: #852459;
+    color: #fff;
+    transition: all 0.6s ease;
+  }
+}
