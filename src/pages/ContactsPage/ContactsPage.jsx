@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import ContactsList from '..//..//components/ContactsList';
@@ -17,45 +17,75 @@ import {
 
 import './ContactsPage.scss';
 
-class ContactsPage extends Component {
-  componentDidMount() {
-    this.props.fetchItems();
-  }
+export default function ContactsPage() {
+  useEffect(() => {
+    fetchContacts();
+  }, []);
 
-  render() {
-    return (
-      <section>
-        <div className="PhonebookWrapper">
-          <ContactForm />
-          <div className="ContactsWrapper">
-            <h2 className="Title">Contacts</h2>
+  return (
+    <section>
+      <div className="PhonebookWrapper">
+        <ContactForm />
+        <div className="ContactsWrapper">
+          <h2 className="Title">Contacts</h2>
 
-            {this.props.items.length > 0 ? (
-              <>
-                <Filter />
+          {this.props.items.length > 0 ? (
+            <>
+              <Filter />
 
-                <ContactsList>
-                  {this.props.isLoading && <Spinner animation="border" />}
-                  <ContactsListItem />
-                </ContactsList>
-              </>
-            ) : (
-              <span>You have no contacts yet </span>
-            )}
-          </div>
+              <ContactsList>
+                {this.props.isLoading && <Spinner animation="border" />}
+                <ContactsListItem />
+              </ContactsList>
+            </>
+          ) : (
+            <span>You have no contacts yet </span>
+          )}
         </div>
-      </section>
-    );
-  }
+      </div>
+    </section>
+  );
 }
-const mapStateToProps = state => ({
-  items: getItems(state),
-  isLoading: getLoadingItems(state),
-});
 
-const mapDispatchToProps = dispatch => ({
-  fetchItems: () => dispatch(fetchContacts()),
-  // onGetCurrentUser: () => dispatch(getCurrentUser()),
-});
+// class ContactsPage extends Component {
+//   componentDidMount() {
+//     this.props.fetchItems();
+//   }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ContactsPage);
+//   render() {
+//     return (
+//       <section>
+//         <div className="PhonebookWrapper">
+//           <ContactForm />
+//           <div className="ContactsWrapper">
+//             <h2 className="Title">Contacts</h2>
+
+//             {this.props.items.length > 0 ? (
+//               <>
+//                 <Filter />
+
+//                 <ContactsList>
+//                   {this.props.isLoading && <Spinner animation="border" />}
+//                   <ContactsListItem />
+//                 </ContactsList>
+//               </>
+//             ) : (
+//               <span>You have no contacts yet </span>
+//             )}
+//           </div>
+//         </div>
+//       </section>
+//     );
+//   }
+// }
+// const mapStateToProps = state => ({
+//   items: getItems(state),
+//   isLoading: getLoadingItems(state),
+// });
+
+// const mapDispatchToProps = dispatch => ({
+//   fetchItems: () => dispatch(fetchContacts()),
+
+// });
+
+// export default connect(mapStateToProps, mapDispatchToProps)(ContactsPage);

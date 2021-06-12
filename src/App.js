@@ -4,10 +4,6 @@ import { connect } from 'react-redux';
 
 import Container from './components/Container';
 import AppBar from './components/AppBar';
-// import MainPage from './pages/MainPage';
-// import ContactsPage from './pages/ContactsPage';
-// import LoginPage from './pages/LoginPage';
-// import RegisterPage from './pages/RegisterPage';
 import Spinner from 'react-bootstrap/Spinner';
 
 import { fetchContacts } from './redux/contacts/contacts-operations';
