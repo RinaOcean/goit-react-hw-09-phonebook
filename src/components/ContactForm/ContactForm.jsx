@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { addContact, getItems } from '../../redux/contacts';
-
+import { toast } from 'react-toastify';
 import './ContactForm.scss';
 
 export default function ContactForm() {
@@ -29,7 +29,7 @@ export default function ContactForm() {
         contact.name === name || contact.number === number;
 
       if (items.some(isInContacts)) {
-        alert(`Contact is already in contacts`);
+        toast(`Contact is already in contacts`);
         return;
       }
       dispatch(addContact({ name, number }));
