@@ -1,19 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
-import PropTypes from 'prop-types';
 import { addContact, getItems } from '../../redux/contacts';
 
 import './ContactForm.scss';
-import { useCallback } from 'react';
-
-// const mapStateToProps = state => ({
-//   items: getItems(state),
-// });
-
-// const mapDispatchFromProps = dispatch => ({
-//   onSubmit: ({ name, number }) => dispatch(addContact({ name, number })),
-// });
 
 export default function ContactForm() {
   const dispatch = useDispatch();
@@ -38,7 +28,6 @@ export default function ContactForm() {
   };
 
   const items = useSelector(getItems);
-  const onSubmit = useCallback(() => dispatch(addContact), [dispatch]);
 
   const handleSubmit = event => {
     event.preventDefault();
@@ -49,7 +38,8 @@ export default function ContactForm() {
       alert(`Contact is already in contacts`);
       return;
     }
-    onSubmit(name, number);
+    dispatch(addContact({ name, number }));
+
     reset();
   };
 
