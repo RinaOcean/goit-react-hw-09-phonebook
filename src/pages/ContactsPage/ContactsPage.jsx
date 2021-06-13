@@ -17,7 +17,7 @@ import {
 
 import './ContactsPage.scss';
 
-export default function ContactsPage() {
+export default function ContactsPage(items, isLoading) {
   useEffect(() => {
     fetchContacts();
   }, []);
@@ -29,12 +29,12 @@ export default function ContactsPage() {
         <div className="ContactsWrapper">
           <h2 className="Title">Contacts</h2>
 
-          {this.props.items.length > 0 ? (
+          {items.length > 0 ? (
             <>
               <Filter />
 
               <ContactsList>
-                {this.props.isLoading && <Spinner animation="border" />}
+                {isLoading && <Spinner animation="border" />}
                 <ContactsListItem />
               </ContactsList>
             </>
