@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import { useCallback, useReducer } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeContact, getFilteredContactList } from '../../redux/contacts';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';

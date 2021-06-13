@@ -1,4 +1,3 @@
-import { SignalWifi1BarRounded } from '@material-ui/icons';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import {
