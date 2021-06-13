@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import ContactsList from '..//..//components/ContactsList';
 import ContactsListItem from '..//..//components/ContactListItem';
@@ -17,10 +17,15 @@ import {
 
 import './ContactsPage.scss';
 
-export default function ContactsPage(items, isLoading) {
+export default function ContactsPage() {
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    fetchContacts();
-  }, []);
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
+  const items = useSelector(getItems);
+  const isLoading = useSelector(getLoadingItems);
 
   return (
     <section>

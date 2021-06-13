@@ -59,7 +59,7 @@ export default function RegisterPage() {
           <h1 className="Title">Registration</h1>
         </div>
 
-        <form onSubmit={() => null} className="Form">
+        <form onSubmit={handleSubmit} className="Form">
           <label className="Label">
             Name
             <input
