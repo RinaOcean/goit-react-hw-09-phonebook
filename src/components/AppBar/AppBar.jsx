@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import MainNavigation from '../MainNavigation';
 import AuthNavigation from '../AuthNavigation';
@@ -8,18 +8,14 @@ import { getIsAuthenticated } from '../../redux/auth';
 
 import './AppBar.scss';
 
-const AppBar = ({ isAuthenticated }) => {
+export default function AppBar() {
+  const isLoggedIn = useSelector(getIsAuthenticated);
+
   return (
     <header className="Header">
       <MainNavigation />
 
-      {isAuthenticated ? <UserMenu /> : <AuthNavigation />}
+      {isLoggedIn ? <UserMenu /> : <AuthNavigation />}
     </header>
   );
-};
-
-const mapStateToProps = state => ({
-  isAuthenticated: getIsAuthenticated(state),
-});
-
-export default connect(mapStateToProps)(AppBar);
+}

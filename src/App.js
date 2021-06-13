@@ -1,6 +1,6 @@
-import React, { Component, Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { Redirect, Switch } from 'react-router-dom';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Container from './components/Container';
 import AppBar from './components/AppBar';
@@ -29,51 +29,43 @@ const RegisterPage = lazy(() =>
   import('./pages/RegisterPage' /* webpackChunkName: "register-page" */),
 );
 
-class App extends Component {
-  componentDidMount() {
-    this.props.onGetCurrentUser();
-    this.props.fetchItems();
-  }
+export default function App() {
+  const dispatch = useDispatch();
+  const items = useSelector(getItems);
+  const isLoading = useSelector(getLoadingItems);
 
-  render() {
-    return (
-      <Container>
-        <AppBar />
-        <Suspense fallback={<Spinner />}>
-          <Switch>
-            <PublicRoute exact path="/" component={HomePage} />
-            <PrivateRoute
-              path="/contacts"
-              redirectTo="/login"
-              component={ContactsPage}
-            />
-            <PublicRoute
-              path="/login"
-              restricted
-              redirectTo="/contacts"
-              component={LoginPage}
-            />
-            <PublicRoute
-              path="/register"
-              restricted
-              redirectTo="/"
-              component={RegisterPage}
-            />
-            <Redirect to="/" />
-          </Switch>
-        </Suspense>
-      </Container>
-    );
-  }
+  useEffect(() => {
+    console.log('hi');
+    dispatch(getCurrentUser());
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
+  return (
+    <Container>
+      <AppBar />
+      <Suspense fallback={<Spinner />}>
+        <Switch>
+          <PublicRoute exact path="/" component={HomePage} />
+          <PrivateRoute
+            path="/contacts"
+            redirectTo="/login"
+            component={ContactsPage}
+          />
+          <PublicRoute
+            path="/login"
+            restricted
+            redirectTo="/contacts"
+            component={LoginPage}
+          />
+          <PublicRoute
+            path="/register"
+            restricted
+            redirectTo="/"
+            component={RegisterPage}
+          />
+          <Redirect to="/" />
+        </Switch>
+      </Suspense>
+    </Container>
+  );
 }
-const mapStateToProps = state => ({
-  items: getItems(state),
-  isLoading: getLoadingItems(state),
-});
-
-const mapDispatchToProps = dispatch => ({
-  fetchItems: () => dispatch(fetchContacts()),
-  onGetCurrentUser: () => dispatch(getCurrentUser()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);

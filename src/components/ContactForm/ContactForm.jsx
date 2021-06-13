@@ -1,12 +1,20 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
 import { addContact, getItems } from '../../redux/contacts';
 
 import './ContactForm.scss';
 
-export default function ContactForm({ items, onSubmit }) {
+// const mapStateToProps = state => ({
+//   items: getItems(state),
+// });
+
+// const mapDispatchFromProps = dispatch => ({
+//   onSubmit: ({ name, number }) => dispatch(addContact({ name, number })),
+// });
+
+export default function ContactForm() {
   const nameInputId = nanoid();
   const numberInputId = nanoid();
 
@@ -26,6 +34,9 @@ export default function ContactForm({ items, onSubmit }) {
     setName('');
     setNumber('');
   };
+
+  const items = useSelector(getItems);
+  const onSubmit = useDispatch(addContact());
 
   const handleSubmit = event => {
     event.preventDefault();
