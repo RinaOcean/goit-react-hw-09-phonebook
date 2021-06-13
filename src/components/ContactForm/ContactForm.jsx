@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { nanoid } from 'nanoid';
 import { addContact, getItems } from '../../redux/contacts';
@@ -11,37 +11,34 @@ export default function ContactForm() {
   const numberInputId = nanoid();
 
   const [name, setName] = useState('');
-
-  const handleChangeName = event => {
+  const handleChangeName = useCallback(event => {
     setName(event.target.value);
-  };
+  }, []);
 
   const [number, setNumber] = useState('');
-
-  const handleChangeNumber = event => {
+  const handleChangeNumber = useCallback(event => {
     setNumber(event.target.value);
-  };
-
-  const reset = () => {
-    setName('');
-    setNumber('');
-  };
+  }, []);
 
   const items = useSelector(getItems);
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    const isInContacts = contact =>
-      contact.name === name || contact.number === number;
+  const handleSubmit = useCallback(
+    event => {
+      event.preventDefault();
+      const isInContacts = contact =>
+        contact.name === name || contact.number === number;
 
-    if (items.some(isInContacts)) {
-      alert(`Contact is already in contacts`);
-      return;
-    }
-    dispatch(addContact({ name, number }));
+      if (items.some(isInContacts)) {
+        alert(`Contact is already in contacts`);
+        return;
+      }
+      dispatch(addContact({ name, number }));
 
-    reset();
-  };
+      setName('');
+      setNumber('');
+    },
+    [dispatch, items, name, number],
+  );
 
   return (
     <form className="ContactForm" onSubmit={handleSubmit}>

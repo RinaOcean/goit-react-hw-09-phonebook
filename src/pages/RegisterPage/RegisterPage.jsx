@@ -1,11 +1,18 @@
+import { useCallback } from 'react';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { connect } from 'react-redux';
 import { signup } from '..//..//redux/auth';
 
 import '../LoginPage/LoginPage.scss';
 
+// const mapDispatchToProps = {
+//   onSignup: signup,
+// };
+
 export default function RegisterPage() {
+  const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -31,13 +38,18 @@ export default function RegisterPage() {
     }
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
+  const handleSubmit = useCallback(
+    e => {
+      e.preventDefault();
 
-    this.props.onSignup(this.state);
+      dispatch(signup({ name, email, password }));
 
-    this.setState({ name: '', email: '', password: '' });
-  };
+      setName('');
+      setEmail('');
+      setPassword('');
+    },
+    [dispatch, name, email, password],
+  );
 
   return (
     <section className="sectiion_log_reg">
@@ -83,76 +95,3 @@ export default function RegisterPage() {
     </section>
   );
 }
-
-// class RegisterPage extends Component {
-//   state = {
-//     name: '',
-//     email: '',
-//     password: '',
-//   };
-
-//   handleChange = ({ target: { name, value } }) => {
-//     this.setState({ [name]: value });
-//   };
-
-//   handleSubmit = e => {
-//     e.preventDefault();
-
-//     this.props.onSignup(this.state);
-
-//     this.setState({ name: '', email: '', password: '' });
-//   };
-
-//   render() {
-//     const { name, email, password } = this.state;
-
-//     return (
-//       <section className="sectiion_log_reg">
-//         <div className="FormWrapper">
-//           <div className="TitleWrapper">
-//             <h1 className="Title">Registration</h1>
-//           </div>
-
-//           <form onSubmit={this.handleSubmit} className="Form">
-//             <label className="Label">
-//               Name
-//               <input
-//                 type="text"
-//                 name="name"
-//                 value={name}
-//                 onChange={this.handleChange}
-//               />
-//             </label>
-
-//             <label className="Label">
-//               Email
-//               <input
-//                 type="email"
-//                 name="email"
-//                 value={email}
-//                 onChange={this.handleChange}
-//               />
-//             </label>
-
-//             <label className="Label">
-//               Password
-//               <input
-//                 type="password"
-//                 name="password"
-//                 value={password}
-//                 onChange={this.handleChange}
-//               />
-//             </label>
-//             <button type="submit">Submit</button>
-//           </form>
-//         </div>
-//       </section>
-//     );
-//   }
-// }
-
-// const mapDispatchToProps = {
-//   onSignup: signup,
-// };
-
-// export default connect(null, mapDispatchToProps)(RegisterPage);
