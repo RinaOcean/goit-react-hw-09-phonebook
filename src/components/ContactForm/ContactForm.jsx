@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { addContact, getItems } from '../../redux/contacts';
 
 import './ContactForm.scss';
+import { useCallback } from 'react';
 
 // const mapStateToProps = state => ({
 //   items: getItems(state),
@@ -15,6 +16,7 @@ import './ContactForm.scss';
 // });
 
 export default function ContactForm() {
+  const dispatch = useDispatch();
   const nameInputId = nanoid();
   const numberInputId = nanoid();
 
@@ -36,7 +38,7 @@ export default function ContactForm() {
   };
 
   const items = useSelector(getItems);
-  const onSubmit = useDispatch(addContact());
+  const onSubmit = useCallback(() => dispatch(addContact), [dispatch]);
 
   const handleSubmit = event => {
     event.preventDefault();
