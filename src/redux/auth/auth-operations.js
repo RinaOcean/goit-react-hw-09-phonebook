@@ -1,5 +1,6 @@
+import { SignalWifi1BarRounded } from '@material-ui/icons';
 import axios from 'axios';
-
+import { toast } from 'react-toastify';
 import {
   registerRequest,
   registerSuccess,
@@ -34,8 +35,12 @@ export const signup = credentials => async dispatch => {
 
     token.set(response.data.token);
     dispatch(registerSuccess(response.data));
+    toast('You have been successfully signed up!', {
+      autoClose: 2000,
+    });
   } catch (error) {
     dispatch(registerError(error.message));
+    toast('Something went wrong. Please, retry');
   }
 };
 
@@ -46,8 +51,13 @@ export const login = credentials => async dispatch => {
 
     token.set(response.data.token);
     dispatch(loginSuccess(response.data));
+    toast('Hey!You are logged in!', {
+      autoClose: 2000,
+    });
   } catch (error) {
     dispatch(loginError(error.message));
+
+    toast('Wrong email or password');
   }
 };
 
@@ -58,6 +68,9 @@ export const logout = () => async dispatch => {
 
     token.unset();
     dispatch(logoutSuccess());
+    toast('You are logged out. Bye!', {
+      autoClose: 2000,
+    });
   } catch (error) {
     dispatch(logoutError(error.message));
   }

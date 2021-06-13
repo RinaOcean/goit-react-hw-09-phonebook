@@ -10,7 +10,7 @@ import {
   // logoutRequest,
   logoutSuccess,
   logoutError,
-  getCurrentUserRequest,
+  // getCurrentUserRequest,
   getCurrentUserSuccess,
   getCurrentUserError,
 } from './auth-actions';

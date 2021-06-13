@@ -7,8 +7,9 @@ import './Filter.scss';
 export default function Filter() {
   const dispatch = useDispatch();
   const value = useSelector(getFilterValue);
-  const onChange = useCallback(event =>
-    dispatch(addFilter(event.target.value)),
+  const onChange = useCallback(
+    event => dispatch(addFilter(event.target.value)),
+    [dispatch],
   );
 
   return (

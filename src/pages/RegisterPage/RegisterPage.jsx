@@ -1,23 +1,17 @@
-import { useCallback } from 'react';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-
-import { connect } from 'react-redux';
 import { signup } from '..//..//redux/auth';
 
 import '../LoginPage/LoginPage.scss';
 
-// const mapDispatchToProps = {
-//   onSignup: signup,
-// };
-
 export default function RegisterPage() {
   const dispatch = useDispatch();
+
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleChange = event => {
+  const handleChange = useCallback(event => {
     const { name, value } = event.target;
 
     switch (name) {
@@ -36,7 +30,7 @@ export default function RegisterPage() {
       default:
         console.warn('error');
     }
-  };
+  }, []);
 
   const handleSubmit = useCallback(
     e => {

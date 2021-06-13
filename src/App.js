@@ -1,13 +1,14 @@
-import React, { Suspense, lazy, useEffect, useCallback } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
 import { Redirect, Switch } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-
+import { useDispatch } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Container from './components/Container';
 import AppBar from './components/AppBar';
 import Spinner from 'react-bootstrap/Spinner';
 
 import { fetchContacts } from './redux/contacts/contacts-operations';
-import { getItems, getLoadingItems } from './redux/contacts/contacts-selectors';
+// import { getItems, getLoadingItems } from './redux/contacts/contacts-selectors';
 import { getCurrentUser } from './redux/auth/auth-operations';
 
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
@@ -31,8 +32,8 @@ const RegisterPage = lazy(() =>
 
 export default function App() {
   const dispatch = useDispatch();
-  const items = useSelector(getItems);
-  const isLoading = useSelector(getLoadingItems);
+  // const items = useSelector(getItems);
+  // const isLoading = useSelector(getLoadingItems);
 
   useEffect(() => {
     console.log('hi');
@@ -45,27 +46,36 @@ export default function App() {
       <AppBar />
       <Suspense fallback={<Spinner />}>
         <Switch>
-          <PublicRoute exact path="/" component={HomePage} />
-          <PrivateRoute
-            path="/contacts"
-            redirectTo="/login"
-            component={ContactsPage}
-          />
-          <PublicRoute
-            path="/login"
-            restricted
-            redirectTo="/contacts"
-            component={LoginPage}
-          />
-          <PublicRoute
-            path="/register"
-            restricted
-            redirectTo="/"
-            component={RegisterPage}
-          />
+          <PublicRoute exact path="/">
+            <HomePage />
+          </PublicRoute>
+
+          <PrivateRoute path="/contacts" redirectTo="/login">
+            <ContactsPage />
+          </PrivateRoute>
+
+          <PublicRoute path="/login" restricted redirectTo="/contacts">
+            <LoginPage />
+          </PublicRoute>
+
+          <PublicRoute path="/register" restricted redirectTo="/">
+            <RegisterPage />
+          </PublicRoute>
+
           <Redirect to="/" />
         </Switch>
       </Suspense>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
     </Container>
   );
 }

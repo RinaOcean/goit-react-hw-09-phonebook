@@ -6,28 +6,28 @@ import './LoginPage.scss';
 
 export default function LoginPage() {
   const dispatch = useDispatch();
+
   const [email, setEmail] = useState('');
-
-  const handleChangeEmail = event => {
-    setEmail(event.target.value);
-  };
-
   const [password, setPassword] = useState('');
 
-  const handleChangePassword = event => {
+  const handleChangeEmail = useCallback(event => {
+    setEmail(event.target.value);
+  }, []);
+
+  const handleChangePassword = useCallback(event => {
     setPassword(event.target.value);
-  };
+  }, []);
 
   const handleSubmit = useCallback(
-    e => {
-      e.preventDefault();
+    event => {
+      event.preventDefault();
 
-      dispatch(login());
+      dispatch(login({ email, password }));
 
       setEmail('');
       setPassword('');
     },
-    [dispatch],
+    [dispatch, email, password],
   );
 
   return (

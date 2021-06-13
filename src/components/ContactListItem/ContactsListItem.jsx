@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useCallback } from 'react';
+import { useCallback, useReducer } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { removeContact, getFilteredContactList } from '../../redux/contacts';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
@@ -9,7 +9,7 @@ import './ContactsListItem.scss';
 export default function ContactsListItem() {
   const dispatch = useDispatch();
   const contactsItems = useSelector(getFilteredContactList);
-  const onDelete = useCallback(() => dispatch(removeContact()), [dispatch]);
+  const onDelete = id => dispatch(removeContact(id));
 
   return (
     <>
